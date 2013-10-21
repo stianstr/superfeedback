@@ -73,7 +73,7 @@ var SuperFeedback = function(settings) {
 
     self.setup = function(settings) {
         self.settings = $.extend({
-            icon:          '../icon-small.png',
+            icon:          '../icon.png',
             formFadeSpeed: 200,
             annotate:      {},
             // {url: 'post-to-this-url'} or function()
@@ -169,7 +169,7 @@ var SuperFeedback = function(settings) {
                     url:         document.location.href,
                     userAgent:   navigator.userAgent,
                     message:     self.form.textArea.val(),
-                    screenshot:  canvas.toDataURL('image/jpeg')
+                    screenshot:  canvas.toDataURL('image/png')
                 }
                 if (typeof(self.settings.submit) == 'function') {
                     self.settings.submit(data);

@@ -3,7 +3,7 @@
    Trigger button
    ************************************************ */
 
-#sfb-start-button {
+a#sfb-start-button {
     display: block;
     width: 100px;
     height: 25px;
@@ -14,12 +14,14 @@
     font-weight: bold;
     background: #bbb;
     opacity: 0.9;
+    color: black;
 }
-#sfb-start-button:hover {
+a#sfb-start-button:hover {
     background: green;
     color: white;
     cursor: pointer;
     opacity: 1;
+    text-decoration: none;
 }
 
 /* ************************************************
@@ -27,40 +29,40 @@
    ************************************************ */
 
 #sfb-start-button.sfb-top-right {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: fixed;
+    top: 0px;
+    right: 0px;
     border-bottom-left-radius: 10px;
     box-shadow: -1px 2px 3px #ddd;
 }
 
 #sfb-start-button.sfb-bottom-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
     border-top-left-radius: 10px;
     box-shadow: -1px -1px 2px #ddd;
 }
 
 #sfb-start-button.sfb-bottom-left {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
     border-top-right-radius: 10px;
     box-shadow: 1px -1px 2px #ddd;
 }
 
 #sfb-start-button.sfb-top-left {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
+    top: 0px;
+    left: 0px;
     border-bottom-right-radius: 10px;
     box-shadow: 1px 1px 2px #ddd;
 }
 
 #sfb-start-button.sfb-top-center {
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 0px;
     left: 50%;
     margin-left: -50px;
     border-bottom-right-radius: 10px;
@@ -69,8 +71,8 @@
 }
 
 #sfb-start-button.sfb-bottom-center {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 0px;
     left: 50%;
     margin-left: -50px;
     border-top-right-radius: 10px;
@@ -79,9 +81,9 @@
 }
 
 #sfb-start-button.sfb-middle-left {
-    position: absolute;
+    position: fixed;
     top: 50%;
-    left: 0;
+    left: 0px;
     margin-top: -12px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -98,7 +100,7 @@
 }
 
 #sfb-start-button.sfb-middle-right {
-    position: absolute;
+    position: fixed;
     top: 50%;
     right: 0;
     margin-top: -12px;
@@ -134,46 +136,46 @@
    ************************************************ */
 
 #sfb-form.sfb-top-right {
-    position: absolute;
-    right: 10;
-    top: 10;
+    position: fixed;
+    right: 10px;
+    top: 10px;
 }
 #sfb-form.sfb-bottom-right {
-    position: absolute;
-    right: 10;
-    bottom: 10;
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
 }
 #sfb-form.sfb-bottom-left {
-    position: absolute;
-    left: 10;
-    bottom: 10;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
 }
 #sfb-form.sfb-top-left {
-    position: absolute;
-    left: 10;
-    top: 10;
+    position: fixed;
+    left: 10px;
+    top: 10px;
 }
 #sfb-form.sfb-middle-left {
-    position: absolute;
-    left: 10;
+    position: fixed;
+    left: 10px;
     top: 50%;
     margin-top: -150px;
 }
 #sfb-form.sfb-middle-right {
-    position: absolute;
-    right: 10;
+    position: fixed;
+    right: 10px;
     top: 50%;
     margin-top: -150px;
 }
 #sfb-form.sfb-top-center {
-    position: absolute;
-    top: 10;
+    position: fixed;
+    top: 10px;
     left: 50%;
     margin-left: -150px;
 }
 #sfb-form.sfb-bottom-center {
-    position: absolute;
-    bottom: 10;
+    position: fixed;
+    bottom: 10px;
     left: 50%;
     margin-left: -150px;
 }
@@ -205,9 +207,11 @@
 }
 .sfb-form-message textarea {
     padding: 10px;
-    width: 100%;
+    width: 265px;
     height: 150px;
     resize: none;
+    font-size: 12px;
+    margin-bottom: 0;
 }
 .sfb-form-heading {
     font-size: 18px;
@@ -228,6 +232,7 @@
     width: 210px;
     padding-top: 5px;
     color: #777;
+    line-height: 12px;
 }
 .sfb-form-drawing-button {
     float: right;
@@ -257,7 +262,7 @@
     font-size: 12px;
 }
 
-#sfm-form .sfb-alert {
+#sfb-form .sfb-alert {
     margin-bottom: 5px;
 }
 
