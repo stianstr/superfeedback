@@ -71,6 +71,8 @@ var SuperFeedback = function(settings) {
     var self = this;
     self.form = null;
 
+    self.customData = {};
+
     self.setup = function(settings) {
         self.settings = $.extend({
             icon:          '../icon.png',
@@ -138,6 +140,13 @@ var SuperFeedback = function(settings) {
         self.feedbackButton.show();
     }
 
+    self.addCustomData = function(key, value) {
+        self.customData[key] = value;
+    }
+
+    // =================================================================
+
+
     self.getPositionClass = function() {
         return (self.settings.position) ? self.settings.elementPrefix + self.settings.position : '';
     }
@@ -180,7 +189,8 @@ var SuperFeedback = function(settings) {
                     url:         document.location.href,
                     userAgent:   navigator.userAgent,
                     message:     self.form.textArea.val(),
-                    screenshot:  canvas.toDataURL('image/png')
+                    screenshot:  canvas.toDataURL('image/png'),
+                    custom:      self.customData
                 }
                 if (typeof(self.settings.submit) == 'function') {
                     self.settings.submit(data, self.submitted);
