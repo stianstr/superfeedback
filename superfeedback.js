@@ -172,22 +172,26 @@ var SuperFeedback = function(settings) {
                     screenshot:  canvas.toDataURL('image/png')
                 }
                 if (typeof(self.settings.submit) == 'function') {
-                    self.settings.submit(data);
+                    self.settings.submit(data, self.submitted);
                 } else {
                     $.ajax({
                         type:    'POST',
                         url:     self.settings.submit.url,
                         data:    data,
                         success: function(data) {
-                            self.annotate.reset();
-                            self.form.container.remove();
-                            if (self.settings.submitted)
-                                self.settings.submitted(data);
+                            self.submitted(data);
                         }
                     });
                 }
             }
         });
+    }
+
+    self.submitted = function(data) {
+        self.annotate.reset();
+        self.form.container.remove();
+        if (self.settings.submitted)
+            self.settings.submitted(data);
     }
 
     self.setup(settings);
