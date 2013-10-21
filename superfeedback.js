@@ -141,7 +141,10 @@ var SuperFeedback = function(settings) {
     }
 
     self.addCustomData = function(key, value) {
-        self.customData[key] = value;
+        if (value === undefined)
+            self.customData = (key) ? key : {};
+        else
+            self.customData[key] = value;
     }
 
     // =================================================================
