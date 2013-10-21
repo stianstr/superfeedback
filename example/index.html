@@ -11,6 +11,7 @@
     <h1>Sample page - superfeedback.js</h1>
     <p>A feedback form allowing you to draw on and annotate the page, then sending a screenshot of it to the server.</p>
     <p>Uses annotate.js for drawing, and html2canvas.js for screnshotting.</p>
+    <p>Click <b>FEEDBACK</b> in the bottom right corner to try.</p>
   </div>
 
   <script src="/js/html2canvas.js"></script>
@@ -19,7 +20,8 @@
   <script type="text/javascript">
     $(function() {
         var sfb = new SuperFeedback({
-            callback: function(data) {
+            submit: { url: 'server-post.php' },
+            submitted: function(data) {
                 document.location.href = 'server-view.php?id=' + data.id;
             }
         });

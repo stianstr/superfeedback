@@ -51,7 +51,7 @@ var SuperFeedbackForm = function(settings) {
           +  '          <div class="sfb-form-drawing-text">' + self.text('DrawTeaser') + '</div>'
           +  '      </div>'
           +  '      <div id="sfb-form-drawing-info" class="alert" style="display: none">'
-          +  '          <h4>' + self.text('DrawModeActiveTitle') + '</h4>' +
+          +  '          <h4>' + self.text('DrawModeActiveTitle') + '</h4>'
           +  '          <p>' + self.text('DrawTips') + '</p>'
           +  '          <button id="sfb-disable" class="btn btn-warning btn-small">' + self.text('FinishedDrawingButton') + '</button>'
           +  '      </div>'
@@ -76,9 +76,10 @@ var SuperFeedback = function(settings) {
             icon:          '../icon-small.png',
             formFadeSpeed: 200,
             annotate:      {},
-            submit: {
-                url:       'server-post.php'
-            },
+            // {url: 'post-to-this-url'} or function()
+            submit:        {},
+            // callback after submitted
+            submitted:     null,
             // top-left, bottom-left, top-right, bottom-right, middle-left, middle-right, top-center, bottom-center
             position:      'bottom-right',
             elementPrefix: 'sfb-',
@@ -170,18 +171,21 @@ var SuperFeedback = function(settings) {
                     message:     self.form.textArea.val(),
                     screenshot:  canvas.toDataURL('image/jpeg')
                 }
-                var options = {
-                    type:    "POST",
-                    url:     self.settings.submit.url,
-                    data:    data,
-                    success: function(data) {
-                        self.annotate.reset();
-                        self.form.container.remove();
-                        if (self.settings.callback)
-                            self.settings.callback(data);
-                    }
-                };
-                $.ajax(options);
+                if (typeof(self.settings.submit) == 'function') {
+                    self.settings.submit(data);
+                } else {
+                    $.ajax({
+                        type:    'POST',
+                        url:     self.settings.submit.url,
+                        data:    data,
+                        success: function(data) {
+                            self.annotate.reset();
+                            self.form.container.remove();
+                            if (self.settings.submitted)
+                                self.settings.submitted(data);
+                        }
+                    });
+                }
             }
         });
     }
