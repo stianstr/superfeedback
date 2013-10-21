@@ -62,8 +62,7 @@ var SuperFeedbackForm = function(settings) {
           +  '  </div>'
           +  '</div>'
           +  '<div id="sfb-form-sending" style="display: none">'
-          +  ' <img src="' + self.settings.spinner + '"> '
-          +  ' <span class="sfb-sending-text">' + self.text('SendingPleaseWait') + '</span>'
+          +    self.text('SendingPleaseWait')
           +  '</div>';
       return html;
     }
@@ -77,7 +76,6 @@ var SuperFeedback = function(settings) {
     self.setup = function(settings) {
         self.settings = $.extend({
             icon:          '../icon.png',
-            spinner:       '../spinner.gif',
             formFadeSpeed: 200,
             annotate:      {},
             // {url: 'post-to-this-url'} or function()
@@ -97,7 +95,8 @@ var SuperFeedback = function(settings) {
                 DrawTeaser:             'A picture is worth a thousand words.<br/>Use draw to highlight parts of the page:',
                 DrawModeActiveTitle:    'Drawing mode active',
                 DrawTips:               'Click and draw rectangle(s) to highlight and comment portions of the page.',
-                SendingPleaseWait:      'Sending, please wait...'
+                SendingPleaseWait:      'Sending, please wait...',
+                SentThankYou:           'Message sent, thank you :-)'
             }
         }, settings);
 
@@ -119,6 +118,7 @@ var SuperFeedback = function(settings) {
             self.form.contentsContainer.hide();
             self.form.sendingIndicator.show();
             self.form.container.addClass('sending');
+            self.form.sendingIndicator.html(self.settings.texts.SendingPleaseWait);
             self.takeScreenshot();
         });
         self.form.cancelButton.on('click', function() {
@@ -196,11 +196,15 @@ var SuperFeedback = function(settings) {
     }
 
     self.submitted = function(data) {
+        self.annotate.disable();
         self.annotate.reset();
-        self.form.container.remove();
-        self.stop();
         if (self.settings.submitted)
             self.settings.submitted(data);
+        self.form.container.removeClass('sending').addClass('sent');
+        self.form.sendingIndicator.html(self.settings.texts.SentThankYou);
+        self.form.container.fadeOut(4000, function() {
+            self.stop();
+        });
     }
 
     self.setup(settings);

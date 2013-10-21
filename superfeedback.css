@@ -185,18 +185,19 @@ a#sfb-start-button:hover {
    ************************************************ */
 
 #sfb-form.sending {
-    background: #00AC18;
-    opacity: 0.8;
+    background: #eceC50;
+    opacity: 0.9;
 }
-#sfb-form.sending img {
-    position: relative;
-    top: 5px;
-}
-.sfb-sending-text {
+#sfb-form-sending {
     font-size: 14px;
     font-weight: bold;
-    line-height: 24px;
     vertical-align: middle;
+    color: black;
+}
+#sfb-form.sent {
+    background: green;
+}
+#sfb-form.sent #sfb-form-sending {
     color: white;
 }
 
