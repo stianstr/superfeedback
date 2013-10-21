@@ -134,6 +134,9 @@ var SuperFeedback = function(settings) {
         self.annotate.disable();
         self.annotate.reset();
         self.form.textArea.val('');
+        self.form.sendingIndicator.hide();
+        self.form.container.removeClass('sending').removeClass('sent');
+        self.form.contentsContainer.show();
         self.form.container.hide();
         self.feedbackButton.show();
     }
