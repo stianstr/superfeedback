@@ -1,0 +1,30 @@
+<html>
+ <head>
+  <title>superfeedback.js - example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="/kernel/div/annotate/annotate.css"> 
+  <link rel="stylesheet" type="text/css" href="../superfeedback.css"> 
+</head>
+<body>
+
+  <div id="contents">
+    <h1>Sample page - superfeedback.js</h1>
+    <p>A feedback form allowing you to draw on and annotate the page, then sending a screenshot of it to the server.</p>
+    <p>Uses annotate.js for drawing, and html2canvas.js for screnshotting.</p>
+  </div>
+
+  <script src="/js/html2canvas.js"></script>
+  <script src="/kernel/div/annotate/annotate.js" type="text/javascript"></script>
+  <script src="../superfeedback.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+        var sfb = new SuperFeedback({
+            callback: function(data) {
+                document.location.href = 'server-view.php?id=' + data.id;
+            }
+        });
+    });
+  </script>
+
+</body>
+</html>
