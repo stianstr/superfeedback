@@ -61,9 +61,7 @@ var SuperFeedbackForm = function(settings) {
           +  '      <button class="sfb-btn" id="sfb-cancel">' + self.text('CancelButton') + '</button>'
           +  '  </div>'
           +  '</div>'
-          +  '<div id="sfb-form-sending" style="display: none">'
-          +    self.text('SendingPleaseWait')
-          +  '</div>';
+          +  '<div id="sfb-form-sending" style="display: none"></div>';
       return html;
     }
 
@@ -96,6 +94,7 @@ var SuperFeedback = function(settings) {
                 DrawModeActiveTitle:    'Drawing mode active',
                 DrawTips:               'Click and draw rectangle(s) to highlight and comment portions of the page.',
                 SendingPleaseWait:      'Sending, please wait...',
+                TakingScreenshotPleaseWait: 'Taking screenshot, please wait...',
                 SentThankYou:           'Message sent, thank you :-)'
             }
         }, settings);
@@ -116,9 +115,7 @@ var SuperFeedback = function(settings) {
         self.form.submitButton.on('click', function() {
             self.annotate.disable();
             self.form.contentsContainer.hide();
-            self.form.sendingIndicator.show();
             self.form.container.addClass('sending');
-            self.form.sendingIndicator.html(self.settings.texts.SendingPleaseWait);
             self.takeScreenshot();
         });
         self.form.cancelButton.on('click', function() {
@@ -174,8 +171,11 @@ var SuperFeedback = function(settings) {
     }
 
     self.takeScreenshot = function() {
+        self.form.sendingIndicator.show();
+        self.form.sendingIndicator.html(self.settings.texts.TakingScreenshotPleaseWait);
         html2canvas(document.body, {
             onrendered: function(canvas) {
+                self.form.sendingIndicator.html(self.settings.texts.SendingPleaseWait);
                 var data = {
                     url:         document.location.href,
                     userAgent:   navigator.userAgent,
