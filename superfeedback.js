@@ -149,7 +149,6 @@ var SuperFeedback = function(settings) {
 
     // =================================================================
 
-
     self.getPositionClass = function() {
         return (self.settings.position) ? self.settings.elementPrefix + self.settings.position : '';
     }
@@ -182,11 +181,36 @@ var SuperFeedback = function(settings) {
         });
     }
 
+    self.getViewport = function() {
+        var $w = $(window);
+        return {
+            l: $w.scrollLeft(),
+            t: $w.scrollTop(),
+            w: $w.width(),
+            h: $w.height()
+        }
+    }
+
+    self.initFrame = function() {
+        var coords = self.getViewport();
+        self.frame = $('<div></div>').css({
+            position: 'absolute',
+            top: coords.t + 'px',
+            left: coords.l + 'px',
+            height: coords.h + 'px',
+            width: coords.w + 'px',
+            border: '4px solid #888',
+            opacity: 0.7
+        }).appendTo('body');
+    }
+
     self.takeScreenshot = function() {
+        self.initFrame();
         self.form.sendingIndicator.show();
         self.form.sendingIndicator.html(self.settings.texts.TakingScreenshotPleaseWait);
         html2canvas(document.body, {
             onrendered: function(canvas) {
+                self.frame.remove();
                 self.form.sendingIndicator.html(self.settings.texts.SendingPleaseWait);
                 var data = {
                     url:         document.location.href,
