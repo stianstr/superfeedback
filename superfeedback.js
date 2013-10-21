@@ -118,16 +118,20 @@ var SuperFeedback = function(settings) {
             self.takeScreenshot();
         });
         self.form.cancelButton.on('click', function() {
-            self.annotate.disable();
-            self.annotate.reset();
-            self.form.textArea.val('');
-            self.form.container.hide();
-            self.feedbackButton.show();
+            self.stop();
         });
     }
 
     self.start = function() {
         self.form.container.show();
+    }
+
+    self.stop = function() {
+        self.annotate.disable();
+        self.annotate.reset();
+        self.form.textArea.val('');
+        self.form.container.hide();
+        self.feedbackButton.show();
     }
 
     self.getPositionClass = function() {
@@ -190,6 +194,7 @@ var SuperFeedback = function(settings) {
     self.submitted = function(data) {
         self.annotate.reset();
         self.form.container.remove();
+        self.stop();
         if (self.settings.submitted)
             self.settings.submitted(data);
     }
