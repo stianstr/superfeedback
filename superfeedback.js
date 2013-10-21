@@ -61,7 +61,10 @@ var SuperFeedbackForm = function(settings) {
           +  '      <button class="sfb-btn" id="sfb-cancel">' + self.text('CancelButton') + '</button>'
           +  '  </div>'
           +  '</div>'
-          +  '<div id="sfb-form-sending" style="display: none">' + self.text('SendingPleaseWait') + '</div>';
+          +  '<div id="sfb-form-sending" style="display: none">'
+          +  ' <img src="' + self.settings.spinner + '"> '
+          +  ' <span class="sfb-sending-text">' + self.text('SendingPleaseWait') + '</span>'
+          +  '</div>';
       return html;
     }
 
@@ -74,6 +77,7 @@ var SuperFeedback = function(settings) {
     self.setup = function(settings) {
         self.settings = $.extend({
             icon:          '../icon.png',
+            spinner:       '../spinner.gif',
             formFadeSpeed: 200,
             annotate:      {},
             // {url: 'post-to-this-url'} or function()

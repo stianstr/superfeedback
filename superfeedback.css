@@ -185,7 +185,19 @@ a#sfb-start-button:hover {
    ************************************************ */
 
 #sfb-form.sending {
-    opacity: 0.5;
+    background: #00AC18;
+    opacity: 0.8;
+}
+#sfb-form.sending img {
+    position: relative;
+    top: 5px;
+}
+.sfb-sending-text {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 24px;
+    vertical-align: middle;
+    color: white;
 }
 
 .sfb-form-body {
