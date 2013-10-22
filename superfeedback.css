@@ -231,10 +231,16 @@ a#sfb-start-button:hover {
     margin-bottom: 10px;
     text-align: left;
 }
+/*
 .sfb-form-heading img {
     position: relative;
-    top: 7px;
+    top: 2px;
     left: -2px;
+}
+*/
+.sfb-form-heading span {
+    position: relative;
+    top: 4px;
 }
 .sfb-form-drawing-container {
     margin-top: 10px;
