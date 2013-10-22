@@ -228,19 +228,20 @@ a#sfb-start-button:hover {
 }
 .sfb-form-heading {
     font-size: 18px;
+    margin: 0;
     margin-bottom: 10px;
     text-align: left;
+    line-height: 30px;
 }
-/*
 .sfb-form-heading img {
-    position: relative;
-    top: 2px;
-    left: -2px;
+    vertical-align: middle;
+    height: 30px;
 }
-*/
 .sfb-form-heading span {
     position: relative;
     top: 4px;
+    line-height: 30px;
+    vertical-align: middle;
 }
 .sfb-form-drawing-container {
     margin-top: 10px;
