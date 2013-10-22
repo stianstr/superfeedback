@@ -1,5 +1,8 @@
 var SuperFeedbackForm = function(settings) {
+
     var self = this;
+    var $    = jQuery;
+
     self.settings = settings;
 
     self.attach = function() {
@@ -68,7 +71,10 @@ var SuperFeedbackForm = function(settings) {
 }
 
 var SuperFeedback = function(settings) {
+
     var self = this;
+    var $    = jQuery;
+
     self.form = null;
 
     self.customData = {};
