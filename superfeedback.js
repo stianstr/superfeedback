@@ -17,6 +17,9 @@ var SuperFeedbackForm = function(settings) {
         self.cancelButton       = self.container.find('#sfb-cancel');
         self.sendingIndicator   = self.container.find('#sfb-form-sending');
         self.contentsContainer  = self.container.find('.sfb-form-contents');
+        self.advancedLink       = self.container.find('#sfb-advanced-link');
+        self.mailToInput        = self.container.find('#sfb-mail-to-input');
+        self.mailCcInput        = self.container.find('#sfb-mail-cc-input');
         self.textArea           = self.container.find('textarea');
     }
 
@@ -36,13 +39,28 @@ var SuperFeedbackForm = function(settings) {
         return self.settings.texts[text];
     }
 
+    self.addMailTo = function(address) {
+        self.container.find('#sfb-mail-to-input').val(address);
+    }
+
     self.render = function() {
         var html = ''
           +  '<div class="sfb-form-contents">' 
           +  '  <div class="sfb-form-body">'
           +  '      <div class="sfb-form-heading">'
-          +  '      <img src="' + self.settings.icon + '"/>'
-          +  '      <span>' + self.text('Title') + '</span>'
+          +  '        <img src="' + self.settings.icon + '"/>'
+          +  '        <span>' + self.text('Title') + '</span>'
+          +  '      </div>'
+          +  '      <div class="sfb-advanced sfb-mail-adr sfb-mail-to" style="display: none">'
+          +  '        <span class="sfb-mail-label">' + self.text('MailTo') + '</span>'
+          +  '        <input type="email" id="sfb-mail-to-input" />'
+          +  '      </div>'
+          +  '      <div class="sfb-advanced sfb-mail-adr sfb-mail-cc" style="display: none">'
+          +  '        <span class="sfb-mail-label">' + self.text('MailCC') + '</span>'
+          +  '        <input type="email" id="sfb-mail-cc-input" />'
+          +  '      </div>'
+          +  '      <div class="sfb-advanced sfb-mail-help" style="display: none">'
+          +  '       Separate e-mail addresses with comma'
           +  '      </div>'
           +  '      <div class="sfb-form-message">'
           +  '        <textarea placeholder="' + self.text('TextAreaPlaceHolder') + '"></textarea>'
@@ -60,6 +78,7 @@ var SuperFeedbackForm = function(settings) {
           +  '      </div>'
           +  '  </div>'
           +  '  <div class="sfb-form-footer">'
+          +  '      <a id="sfb-advanced-link">' + self.text('AdvancedLinkDisabled') + '</a>'
           +  '      <button class="sfb-btn sfb-btn-primary" id="sfb-submit">' + self.text('SubmitButton') + '</button>'
           +  '      <button class="sfb-btn" id="sfb-cancel">' + self.text('CancelButton') + '</button>'
           +  '  </div>'
@@ -75,9 +94,9 @@ var SuperFeedback = function(settings) {
     var self = this;
     var $    = jQuery;
 
-    self.form = null;
-
-    self.customData = {};
+    self.form         = null;
+    self.customData   = {};
+    self.advancedMode = false;
 
     self.setup = function(settings) {
         self.settings = $.extend({
@@ -103,7 +122,11 @@ var SuperFeedback = function(settings) {
                 DrawTips:               'Click and draw rectangle(s) to highlight and comment portions of the page.',
                 SendingPleaseWait:      'Sending, please wait...',
                 TakingScreenshotPleaseWait: 'Taking screenshot, please wait...',
-                SentThankYou:           'Message sent, thank you :-)'
+                SentThankYou:           'Message sent, thank you :-)',
+                MailTo:                 'To',
+                MailCC:                 'CC',
+                AdvancedLinkDisabled:   'Advanced',
+                AdvancedLinkEnabled:    'Disable advanced',
             }
         }, settings);
 
@@ -129,6 +152,16 @@ var SuperFeedback = function(settings) {
         self.form.cancelButton.on('click', function() {
             self.stop();
         });
+        self.form.advancedLink.on('click', function() {
+            self.advancedMode = !self.advancedMode;
+            if (self.advancedMode) {
+                self.form.advancedLink.html(self.settings.texts.AdvancedLinkEnabled);
+                self.form.container.find('.sfb-advanced').show();
+            } else {
+                self.form.advancedLink.html(self.settings.texts.AdvancedLinkDisabled);
+                self.form.container.find('.sfb-advanced').hide();
+            }
+        });
     }
 
     self.start = function() {
@@ -144,6 +177,10 @@ var SuperFeedback = function(settings) {
         self.form.contentsContainer.show();
         self.form.container.hide();
         self.feedbackButton.show();
+    }
+
+    self.addMailTo = function(address) {
+        self.form.addMailTo(address);
     }
 
     self.addCustomData = function(key, value) {
@@ -223,6 +260,8 @@ var SuperFeedback = function(settings) {
                     userAgent:   navigator.userAgent,
                     message:     self.form.textArea.val(),
                     screenshot:  canvas.toDataURL('image/png'),
+                    to:          self.form.mailToInput.val(),
+                    cc:          self.form.mailCcInput.val(),
                     custom:      self.customData
                 }
                 if (typeof(self.settings.submit) == 'function') {
