@@ -25,6 +25,12 @@ a#sfb-start-button:hover {
     text-decoration: none;
 }
 
+@media print {
+    a#sfb-start-button {
+        display: none;
+    }
+}
+
 /* ************************************************
    Trigger button - positioning
    ************************************************ */
