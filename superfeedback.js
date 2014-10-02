@@ -145,6 +145,7 @@ var SuperFeedback = function(settings) {
         });
         self.form.submitButton.on('click', function() {
             self.annotate.disable();
+			self.populateEmptyMessageFromAnnotations();
             self.form.contentsContainer.hide();
             self.form.container.addClass('sending');
             self.takeScreenshot();
@@ -279,6 +280,15 @@ var SuperFeedback = function(settings) {
             }
         });
     }
+
+	self.populateEmptyMessageFromAnnotations = function() {
+		if (self.form.textArea.val().trim())
+			return;
+		var texts = self.annotate.getTexts();
+		if (!texts || texts.length == 0)
+			return;
+		self.form.textArea.val(texts[0]);
+	}
 
     self.submitted = function(data) {
         self.annotate.disable();

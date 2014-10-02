@@ -11,12 +11,12 @@ $data = json_decode(file_get_contents($file), true);
 <html>
 <body style="background: #ccc">
 <div style="border: 1px solid #aaa; padding: 10px;font-family: arial; font-size: 12px;background: white;">
- <? foreach ($data as $k => $v) { if ($k == 'screenshot') continue; ?>
+ <?php foreach ($data as $k => $v) { if ($k == 'screenshot') continue; ?>
    <div>
     <span class="label" style="text-transform: uppercase; font-weight: bold; display: block;"><?= $k ?></span>
     <span class="value" style="display: block; margin-bottom: 10px"><?= $v ?></span>
    </div>
- <? } ?>
+ <?php } ?>
 </div>
 
 <div style="border: 1px solid #aaa; margin-top: 20px;padding: 0">
