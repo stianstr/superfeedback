@@ -4,7 +4,7 @@ MAINTAINER stian@eonbit.com
 # Update the package repository
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \ 
 	DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 git-core
+	DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 wget
 
 # Configure timezone and locale
 RUN echo "Europe/Stockholm" > /etc/timezone && \
@@ -14,7 +14,6 @@ RUN export LANGUAGE=en_US.UTF-8 && \
 	export LC_ALL=en_US.UTF-8 && \
 	locale-gen en_US.UTF-8 && \
 	DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
-
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
@@ -27,9 +26,21 @@ ENV APACHE_SERVERNAME localhost
 ENV APACHE_SERVERALIAS superfeedback.eonbit.com
 ENV APACHE_SERVERADMIN stian@eonbit.com
 
-RUN mkdir -p /var/lock/apache2 /var/run/apache2  /var/log/apache2 
+RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/log/apache2 
 RUN rm -r /var/www/html/*
-RUN git clone http://github.com/stianstr/superfeedback/ /var/www/html/
+
+ADD superfeedback.js  /var/www/html/superfeedback.js
+ADD superfeedback.css /var/www/html/superfeedback.css
+ADD icon.png          /var/www/html/icon.png
+ADD spinner.gif       /var/www/html/spinner.gif
+ADD example           /var/www/html/example
+
+RUN wget https://raw.githubusercontent.com/stianstr/annotate/master/annotate.js \
+ -O /var/www/html/annotate.js
+RUN wget https://raw.githubusercontent.com/stianstr/annotate/master/annotate.css \
+ -O /var/www/html/annotate.css
+RUN wget https://raw.githubusercontent.com/niklasvh/html2canvas/master/dist/html2canvas.min.js \
+ -O /var/www/html/html2canvas.js
 
 EXPOSE 80
 
