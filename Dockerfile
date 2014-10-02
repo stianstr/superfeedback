@@ -4,7 +4,7 @@ MAINTAINER stian@eonbit.com
 # Update the package repository
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \ 
 	DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 wget
+	DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 wget libapache2-mod-php5
 
 # Configure timezone and locale
 RUN echo "Europe/Stockholm" > /etc/timezone && \
@@ -41,6 +41,8 @@ RUN wget https://raw.githubusercontent.com/stianstr/annotate/master/annotate.css
  -O /var/www/html/annotate.css
 RUN wget https://raw.githubusercontent.com/niklasvh/html2canvas/master/dist/html2canvas.min.js \
  -O /var/www/html/html2canvas.js
+
+RUN mkdir -p /var/www/html/example/server-data && chown www-data /var/www/html/example/server-data
 
 EXPOSE 80
 
