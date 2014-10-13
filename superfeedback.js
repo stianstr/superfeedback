@@ -202,9 +202,9 @@ var SuperFeedback = function(settings) {
     }
 
     self.initFeedbackButton = function() {
-		var style = self.settings.hideButton ? 'style="display: none"' : '';
-		var elem  = self.settings.button ? $(self.settings.button) : $('<a id="sfb-start-button" class="' + self.getPositionClass() + '" ' + style + '>FEEDBACK</a>').appendTo('body');
-        elem.on('click', function() {
+		var style           = self.settings.hideButton ? 'style="display: none"' : '';
+		self.feedbackButton = self.settings.button ? $(self.settings.button) : $('<a id="sfb-start-button" class="' + self.getPositionClass() + '" ' + style + '>FEEDBACK</a>').appendTo('body');
+        self.feedbackButton.on('click', function() {
                 self.feedbackButton.hide();
                 self.start();
         });
