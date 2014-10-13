@@ -6,7 +6,7 @@ var SuperFeedbackForm = function(settings) {
     self.settings = settings;
 
     self.attach = function() {
-		self.container = (settings.container) ? settings.container : $('<div id="sfb-form" class="' + self.settings.positionClass + '" style="display: none"></div>').appendTo('body');
+		self.container = (settings.container) ? $(settings.container) : $('<div id="sfb-form" class="' + self.settings.positionClass + '" style="display: none"></div>').appendTo('body');
         self.container.html(self.render());
         self.drawContainer      = self.container.find('.sfb-form-drawing-container');
         self.drawInfo           = self.container.find('#sfb-form-drawing-info');
