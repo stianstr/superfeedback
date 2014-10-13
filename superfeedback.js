@@ -6,19 +6,21 @@ var SuperFeedbackForm = function(settings) {
     self.settings = settings;
 
     self.attach = function() {
+        self.sendingIndicator   = $('<div id="sfb-form-sending" style="display: none; position: absolute;"></div>').prependTo('body');
+
 		self.container = (settings.container) ? $(settings.container) : $('<div id="sfb-form" class="' + self.settings.positionClass + '" style="display: none"></div>').appendTo('body');
         self.container.html(self.render());
 		if (self.settings.showForm)
 			self.container.show();
 		else
 			self.container.hide();
+
         self.drawContainer      = self.container.find('.sfb-form-drawing-container');
         self.drawInfo           = self.container.find('#sfb-form-drawing-info');
         self.startDrawButton    = self.container.find('#sfb-enable');
         self.stopDrawButton     = self.container.find('#sfb-disable');
         self.submitButton       = self.container.find('#sfb-submit');
         self.cancelButton       = self.container.find('#sfb-cancel');
-        self.sendingIndicator   = self.container.find('#sfb-form-sending');
         self.contentsContainer  = self.container.find('.sfb-form-contents');
         self.advancedLink       = self.container.find('#sfb-advanced-link');
         self.mailToInput        = self.container.find('#sfb-mail-to-input');
@@ -28,15 +30,22 @@ var SuperFeedbackForm = function(settings) {
 
     self.hide = function() {
         self.container.fadeOut(self.settings.formFadeSpeed);
+        self.getEnclosingDialog().fadeOut(self.settings.formFadeSpeed);
     }
 
     self.show = function() {
         self.container.fadeIn(self.settings.formFadeSpeed);
+        self.getEnclosingDialog().fadeIn(self.settings.formFadeSpeed);
     }
 
     self.setZIndex = function(zIndex) {
         self.container.css({ zIndex: zIndex });
+		self.getEnclosingDialog().css({ zIndex: zIndex });
     }
+
+	self.getEnclosingDialog = function() {
+		return self.container.closest('.ui-dialog');
+	}
 
     self.text = function(text) {
         return self.settings.texts[text];
@@ -85,8 +94,7 @@ var SuperFeedbackForm = function(settings) {
           +  '      <button class="sfb-btn sfb-btn-primary" id="sfb-submit">' + self.text('SubmitButton') + '</button>'
           +  '      <button class="sfb-btn" id="sfb-cancel" ' + (self.settings.hideCancel ? 'style="display:none"' : '') + '>' + self.text('CancelButton') + '</button>'
           +  '  </div>'
-          +  '</div>'
-          +  '<div id="sfb-form-sending" style="display: none"></div>';
+          +  '</div>';
       return html;
     }
 
@@ -152,6 +160,10 @@ var SuperFeedback = function(settings) {
 			self.populateEmptyMessageFromAnnotations();
             self.form.contentsContainer.hide();
             self.form.container.addClass('sending');
+        	self.form.sendingIndicator.addClass('sending');
+			if (self.form.getEnclosingDialog())
+				ajax_popup_close_by_child(self.form.container);
+        	self.form.getEnclosingDialog().hide();
             self.takeScreenshot();
         });
         self.form.cancelButton.on('click', function() {
@@ -177,7 +189,7 @@ var SuperFeedback = function(settings) {
         self.annotate.disable();
         self.annotate.reset();
         self.form.textArea.val('');
-        self.form.sendingIndicator.hide();
+        self.form.sendingIndicator.hide().removeClass('sending').removeClass('sent');
         self.form.container.removeClass('sending').removeClass('sent');
         self.form.contentsContainer.show();
         self.form.container.hide();
@@ -300,8 +312,8 @@ var SuperFeedback = function(settings) {
         if (self.settings.submitted)
             self.settings.submitted(data);
         self.form.container.removeClass('sending').addClass('sent');
-        self.form.sendingIndicator.html(self.settings.texts.SentThankYou);
-        self.form.container.fadeOut(4000, function() {
+        self.form.sendingIndicator.html(self.settings.texts.SentThankYou).removeClass('sending').addClass('sent');
+        self.form.sendingIndicator.fadeOut(4000, function() {
             self.stop();
         });
     }
