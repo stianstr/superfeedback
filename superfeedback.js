@@ -8,6 +8,10 @@ var SuperFeedbackForm = function(settings) {
     self.attach = function() {
 		self.container = (settings.container) ? $(settings.container) : $('<div id="sfb-form" class="' + self.settings.positionClass + '" style="display: none"></div>').appendTo('body');
         self.container.html(self.render());
+		if (self.settings.showForm)
+			self.container.show();
+		else
+			self.container.hide();
         self.drawContainer      = self.container.find('.sfb-form-drawing-container');
         self.drawInfo           = self.container.find('#sfb-form-drawing-info');
         self.startDrawButton    = self.container.find('#sfb-enable');
