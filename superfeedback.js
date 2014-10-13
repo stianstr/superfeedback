@@ -47,7 +47,7 @@ var SuperFeedbackForm = function(settings) {
           +  '<div class="sfb-form-contents">' 
           +  '  <div class="sfb-form-body">'
           +  '      <div class="sfb-form-heading">'
-          +  '        <img src="' + self.settings.icon + '"/>'
+          +  ((self.settings.icon) ? '        <img src="' + self.settings.icon + '"/>' : '')
           +  '        <span>' + self.text('Title') + '</span>'
           +  '      </div>'
           +  '      <div class="sfb-advanced sfb-mail-adr sfb-mail-to" style="display: none">'
@@ -77,9 +77,9 @@ var SuperFeedbackForm = function(settings) {
           +  '      </div>'
           +  '  </div>'
           +  '  <div class="sfb-form-footer">'
-          +  '      <a id="sfb-advanced-link">' + self.text('AdvancedLinkDisabled') + '</a>'
+          +  '      <a id="sfb-advanced-link" ' + (self.settings.hideAdvanced ? 'style="display:none"' : '') + '>' + self.text('AdvancedLinkDisabled') + '</a>'
           +  '      <button class="sfb-btn sfb-btn-primary" id="sfb-submit">' + self.text('SubmitButton') + '</button>'
-          +  '      <button class="sfb-btn" id="sfb-cancel">' + self.text('CancelButton') + '</button>'
+          +  '      <button class="sfb-btn" id="sfb-cancel" ' + (self.settings.hideCancel ? 'style="display:none"' : '') + '>' + self.text('CancelButton') + '</button>'
           +  '  </div>'
           +  '</div>'
           +  '<div id="sfb-form-sending" style="display: none"></div>';
@@ -108,26 +108,27 @@ var SuperFeedback = function(settings) {
             submitted:     null,
             // top-left, bottom-left, top-right, bottom-right, middle-left, middle-right, top-center, bottom-center
             position:      'bottom-right',
-            elementPrefix: 'sfb-',
-            texts:         {
-                Title:                  'Send us feedback',
-                TextAreaPlaceHolder:    'Enter your message...',
-                SubmitButton:           'Submit',
-                CancelButton:           'Cancel',
-                DrawButton:             'Draw',
-                FinishedDrawingButton:  'Finished drawing',
-                DrawTeaser:             'A picture is worth a thousand words.<br/>Use draw to highlight parts of the page:',
-                DrawModeActiveTitle:    'Drawing mode active',
-                DrawTips:               'Click and draw rectangle(s) to highlight and comment portions of the page.',
-                SendingPleaseWait:      'Sending, please wait...',
-                TakingScreenshotPleaseWait: 'Taking screenshot, please wait...',
-                SentThankYou:           'Message sent, thank you :-)',
-                MailTo:                 'To',
-                MailCC:                 'CC',
-                AdvancedLinkDisabled:   'Advanced',
-                AdvancedLinkEnabled:    'Disable advanced',
-            }
+            elementPrefix: 'sfb-'
         }, settings);
+
+		self.settings.texts = $.extend({
+            Title:                  'Send us feedback',
+            TextAreaPlaceHolder:    'Enter your message...',
+            SubmitButton:           'Submit',
+            CancelButton:           'Cancel',
+            DrawButton:             'Draw',
+            FinishedDrawingButton:  'Finished drawing',
+            DrawTeaser:             'A picture is worth a thousand words.<br/>Use draw to highlight parts of the page:',
+            DrawModeActiveTitle:    'Drawing mode active',
+            DrawTips:               'Click and draw rectangle(s) to highlight and comment portions of the page.',
+            SendingPleaseWait:      'Sending, please wait...',
+            TakingScreenshotPleaseWait: 'Taking screenshot, please wait...',
+            SentThankYou:           'Message sent, thank you :-)',
+            MailTo:                 'To',
+            MailCC:                 'CC',
+            AdvancedLinkDisabled:   'Advanced',
+            AdvancedLinkEnabled:    'Disable advanced',
+        }, settings.texts ? settings.texts : {});
 
         self.initFeedbackButton();
 
@@ -197,7 +198,8 @@ var SuperFeedback = function(settings) {
     }
 
     self.initFeedbackButton = function() {
-        self.feedbackButton = $('<a id="sfb-start-button" class="' + self.getPositionClass() + '">FEEDBACK</a>')
+		var style = self.settings.hideButton ? 'style="display: none"' : '';
+        self.feedbackButton = $('<a id="sfb-start-button" class="' + self.getPositionClass() + '" ' + style + '>FEEDBACK</a>')
             .on('click', function() {
                 self.feedbackButton.hide();
                 self.start();
