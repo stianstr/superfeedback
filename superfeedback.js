@@ -203,12 +203,11 @@ var SuperFeedback = function(settings) {
 
     self.initFeedbackButton = function() {
 		var style = self.settings.hideButton ? 'style="display: none"' : '';
-        self.feedbackButton = $('<a id="sfb-start-button" class="' + self.getPositionClass() + '" ' + style + '>FEEDBACK</a>')
-            .on('click', function() {
+		var elem  = self.settings.button ? $(self.settings.button) : $('<a id="sfb-start-button" class="' + self.getPositionClass() + '" ' + style + '>FEEDBACK</a>').appendTo('body');
+        elem.on('click', function() {
                 self.feedbackButton.hide();
                 self.start();
-            })
-            .appendTo('body');
+        });
     }
 
     self.initAnnotate = function() {
