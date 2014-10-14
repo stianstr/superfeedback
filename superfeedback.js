@@ -47,6 +47,10 @@ var SuperFeedbackForm = function(settings) {
 		return self.container.closest('.ui-dialog');
 	}
 
+	self.closeEnclosingDialog = function() {
+		self.container.closest('.ui-dialog .ui-dialog-content').dialog('close');
+	}
+
     self.text = function(text) {
         return self.settings.texts[text];
     }
@@ -161,8 +165,7 @@ var SuperFeedback = function(settings) {
             self.form.contentsContainer.hide();
             self.form.container.addClass('sending');
         	self.form.sendingIndicator.addClass('sending');
-			if (self.form.getEnclosingDialog())
-				ajax_popup_close_by_child(self.form.container);
+			self.closeEnclosingDialog();
         	self.form.getEnclosingDialog().hide();
             self.takeScreenshot();
         });
