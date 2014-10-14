@@ -48,7 +48,9 @@ var SuperFeedbackForm = function(settings) {
 	}
 
 	self.closeEnclosingDialog = function() {
-		self.container.closest('.ui-dialog .ui-dialog-content').dialog('close');
+		var dialog = self.container.closest('.ui-dialog .ui-dialog-content');
+		if (dialog && dialog.get(0))
+			dialog.dialog('close');
 	}
 
     self.text = function(text) {
