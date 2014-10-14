@@ -165,7 +165,7 @@ var SuperFeedback = function(settings) {
             self.form.contentsContainer.hide();
             self.form.container.addClass('sending');
         	self.form.sendingIndicator.addClass('sending');
-			self.closeEnclosingDialog();
+			self.form.closeEnclosingDialog();
         	self.form.getEnclosingDialog().hide();
             self.takeScreenshot();
         });
