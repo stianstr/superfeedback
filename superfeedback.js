@@ -6,7 +6,7 @@ var SuperFeedbackForm = function(settings) {
     self.settings = settings;
 
     self.attach = function() {
-        self.sendingIndicator   = $('<div id="sfb-form-sending" style="display: none; position: absolute;"></div>').prependTo('body');
+        self.sendingIndicator   = $('<div id="sfb-form-sending" style="display: none;"></div>').prependTo('body');
 
 		self.container = (settings.container) ? $(settings.container) : $('<div id="sfb-form" class="' + self.settings.positionClass + '" style="display: none"></div>').appendTo('body');
         self.container.html(self.render());
