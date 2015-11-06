@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>superfeedback.js - example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="http://superfeedback.eonbit.com/annotate.css">
+  <link rel="stylesheet" type="text/css" href="../superfeedback.css"> 
+</head>
+<body>
+
+  <div id="contents">
+    <h1>Sample page - <a href="https://github.com/stianstr/superfeedback">superfeedback.js</a></h1>
+    <p>A feedback form allowing you to draw on and annotate the page, then sending a screenshot of it to the server.</p>
+    <p>Uses <a href="https://github.com/stianstr/annotate">annotate.js</a> for drawing, and <a href="https://github.com/niklasvh/html2canvas">html2canvas.js</a> for screnshotting.</p>
+    <p>Click <b>FEEDBACK</b> in the bottom right corner to try.</p>
+  </div>
+
+  <script src="http://superfeedback.eonbit.com/html2canvas.js"></script>
+  <script src="http://superfeedback.eonbit.com/annotate.js" type="text/javascript"></script>
+  <script src="../superfeedback.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    $(function() {
+        var fixedChatlioLink = false;
+        var sfb = new SuperFeedback({
+            submit: { url: 'server-post.php' },
+            submitted: function(data) {
+                document.location.href = 'server-view.php?id=' + data.id;
+            },
+            texts: {
+              StartButton: 'CONTACT US'
+            },
+            chatlio: true
+        });
+    });
+  </script>
+
+  <script type="text/javascript">
+    window._chatlio = window._chatlio||[];
+    !function(){
+      var t=document.getElementById("chatlio-widget-embed");if(t&&window.React&&_chatlio.init)return void _chatlio.init(t,React);for(var e=function(t){return function(){_chatlio.push([t].concat(arguments))}},i=["configure","identify","track","show","hide","isShown","isOnline"],a=0;a<i.length;a++)_chatlio[i[a]]||(_chatlio[i[a]]=e(i[a]));var n=document.createElement("script"),c=document.getElementsByTagName("script")[0];n.id="chatlio-widget-embed",n.src="https://w.chatlio.com/w.chatlio-widget.js",n.async=!0,n.setAttribute("data-embed-version","2.0");
+      n.setAttribute("data-widget-id","3a9704c8-447a-40c6-4f94-29eb2e5a5f0a");
+      n.setAttribute("data-start-hidden", true);
+      c.parentNode.insertBefore(n,c);
+    }();
+  </script>
+
+
+
+</body>
+</html>

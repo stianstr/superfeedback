@@ -1,4 +1,4 @@
-new function(){
+jQuery(function(){
 	var SuperFeedbackForm = function(settings) {
 
     	var self = this;
@@ -31,7 +31,7 @@ new function(){
 			self.chatContainer     = self.container.find('#sfb-form-chat');
 			self.chatStatus        = self.container.find('#sfb-chat-status');
 			self.chatFooter        = self.container.find('.sfb-chat-info');
-			self.chatButton        = self.container.find('#sfb-form-chat .sfb-btn');
+			self.chatButton        = self.container.find('#sfb-chat-btn');
 
     	}
 
@@ -107,7 +107,7 @@ new function(){
           	+  '      </div>'
 
 		  	+  '      <div id="sfb-form-chat" class="sfb-chat-status-online">'
-          	+  '       <button class="sfb-btn sfb-btn-success">' + self.text('ChatButton') + '</button>'
+          	+  '       <button id="sfb-chat-btn" class="sfb-btn sfb-btn-success">' + self.text('ChatButton') + '</button>'
 		  	+  '       <div class="sfb-chat-text">'
 		  	+  '         <div id="sfb-chat-status">' + self.text('ChatOnlineStatus') + '</div>'
 		  	+  '         <div class="sfb-chat-info">' + self.text('ChatOnlineFooter') + '</div>'
@@ -134,6 +134,7 @@ new function(){
     	self.form         = null;
     	self.customData   = {};
     	self.advancedMode = false;
+		self.chatStatus   = null;
 
     	self.setup = function(settings) {
         	self.settings = $.extend({
@@ -148,7 +149,8 @@ new function(){
             	position:          'bottom-right',
             	elementPrefix:     'sfb-',
 				hideChatIfOffline: true,
-				chat:              null
+				chat:              null,
+				chatlio:           null
         	}, settings);
 
 			self.settings.texts = $.extend({
@@ -215,6 +217,8 @@ new function(){
         	});
 
 			self.setChatStatus(false);
+			self.initChatlio();
+			self.initChatButton();
 
 			window.SuperFeedback.instance = self;
     	}
@@ -238,6 +242,10 @@ new function(){
 
 		self.setChatStatus = function(isOnline) {
 
+			if (self.chatStatus === isOnline)
+				return;
+console.log('change chat status:', isOnline);
+
 			if (isOnline) {
 				self.form.chatContainer.removeClass('sfb-chat-status-offline').addClass('sfb-chat-status-online');
 				self.form.chatStatus.html(self.text('ChatOnlineStatus'));
@@ -254,6 +262,8 @@ new function(){
 				}
 			}
 
+			self.chatStatus = isOnline;
+console.log('change chat status complete');
 			return self;
 		}
 
@@ -284,6 +294,43 @@ new function(){
             	self.start();
         	});
     	}
+
+		self.initChatButton = function() {
+			self.form.chatButton.on('click', function(){
+				self.settings.chat();
+				self.stop();
+			});
+		}
+
+		self.initChatlio = function() {
+
+			if (!self.settings.chatlio)
+				return;
+
+			// Probe chatlio for online status and update SFB chat status
+    		document.addEventListener('chatlio.ready', function (e) {
+      			setInterval(
+					function(){ self.setChatStatus(_chatlio.isOnline()); },
+					500
+				);
+    		}, false);
+
+			self.settings.chat = function() {
+
+				// Show chatlio when clicks the chat button i SFB
+				_chatlio.show({ expanded: true });
+
+				// Hijack chatlio-minimize-link to hide the widget completely
+				if (!self._fixedChatlioLink) {
+                	$('#chatlio-widget .chatlio-title-bar').on('click', function(){
+                    	_chatlio.hide();
+                	});
+					self._fixedChatlioLink = true;
+				}
+
+			}
+
+		}
 
     	self.initAnnotate = function() {
         	self.annotate = new Annotate(self.settings.annotate);
@@ -391,4 +438,4 @@ new function(){
 
 	window.SuperFeedback = SuperFeedback;
 
-}();
+});

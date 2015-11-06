@@ -15,7 +15,8 @@ a#sfb-start-button {
     background: #bbb;
     opacity: 0.9;
     color: black;
-    z-index: 10000;
+    /*z-index: 10000;*/
+	z-index: 9998; /* chatlio is 9999 */
 }
 a#sfb-start-button:hover {
     background: green;
@@ -46,8 +47,9 @@ a#sfb-start-button:hover {
 #sfb-start-button.sfb-bottom-right {
     position: fixed;
     bottom: 0px;
-    right: 0px;
+    right: 30px; /* put behind chatlio */
     border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     box-shadow: -1px -1px 2px #ddd;
 }
 
@@ -136,7 +138,8 @@ a#sfb-start-button:hover {
     box-shadow: 5px 5px 5px #ddd;
     font-family: arial;
     font-size: 12px;
-    z-index: 10000;
+    /* z-index: 10000; */
+	z-index: 9998; /* chatlio is 9999 */
 }
 
 /* ************************************************
