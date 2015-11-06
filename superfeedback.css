@@ -312,6 +312,28 @@ a#sfb-start-button:hover {
     margin-bottom: 7px;
 }
 
+#sfb-form-chat .sfb-btn {
+    float: right;
+    width: 80px;
+}
+#sfb-form-chat .sfb-chat-text {
+    width: 210px;
+    padding-top: 5px;
+    color: #777;
+    line-height: 12px;
+}
+#sfb-form-chat.sfb-chat-status-online #sfb-chat-status {
+	color: green;
+	font-weight: bold;
+}
+#sfb-form-chat.sfb-chat-status-offline #sfb-chat-status {
+	font-weight: bold;
+}
+#sfb-form-chat {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 11px;
+}
 
 /* ************************************************
    Overrides for Bootstrap classes

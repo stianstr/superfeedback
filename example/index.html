@@ -3,7 +3,7 @@
  <head>
   <title>superfeedback.js - example</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="../annotate.css"> 
+  <link rel="stylesheet" type="text/css" href="http://superfeedback.eonbit.com/annotate.css">
   <link rel="stylesheet" type="text/css" href="../superfeedback.css"> 
 </head>
 <body>
@@ -15,8 +15,8 @@
     <p>Click <b>FEEDBACK</b> in the bottom right corner to try.</p>
   </div>
 
-  <script src="../html2canvas.js"></script>
-  <script src="../annotate.js" type="text/javascript"></script>
+  <script src="http://superfeedback.eonbit.com/html2canvas.js"></script>
+  <script src="http://superfeedback.eonbit.com/annotate.js" type="text/javascript"></script>
   <script src="../superfeedback.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(function() {
@@ -24,6 +24,9 @@
             submit: { url: 'server-post.php' },
             submitted: function(data) {
                 document.location.href = 'server-view.php?id=' + data.id;
+            },
+            texts: {
+              StartButton: 'CONTACT US'
             }
         });
     });
