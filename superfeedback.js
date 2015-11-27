@@ -244,7 +244,6 @@ jQuery(function(){
 
 			if (self.chatStatus === isOnline)
 				return;
-console.log('change chat status:', isOnline);
 
 			if (isOnline) {
 				self.form.chatContainer.removeClass('sfb-chat-status-offline').addClass('sfb-chat-status-online');
@@ -263,7 +262,6 @@ console.log('change chat status:', isOnline);
 			}
 
 			self.chatStatus = isOnline;
-console.log('change chat status complete');
 			return self;
 		}
 
@@ -290,8 +288,15 @@ console.log('change chat status complete');
 			var style           = self.settings.hideButton ? 'style="display: none"' : '';
 			self.feedbackButton = self.settings.button ? $(self.settings.button) : $('<a id="sfb-start-button" class="' + self.getPositionClass() + '" ' + style + '>' + self.text('StartButton') + '</a>').appendTo('body');
         	self.feedbackButton.on('click', function() {
-            	self.feedbackButton.hide();
-            	self.start();
+				if (self.settings.onClickFeedback) {
+					self.settings.onClickFeedback(function(){
+            			self.feedbackButton.hide();
+            			self.start();
+					});
+				} else {
+            		self.feedbackButton.hide();
+            		self.start();
+				}
         	});
     	}
 
