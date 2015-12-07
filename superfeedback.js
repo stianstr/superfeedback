@@ -89,7 +89,7 @@ jQuery(function(){
           	+  '        <input type="email" id="sfb-mail-cc-input" />'
           	+  '      </div>'
           	+  '      <div class="sfb-advanced sfb-mail-help" style="display: none">'
-          	+  '       Separate e-mail addresses with comma'
+          	+  '       ' + self.text('SeparateEmailsByComma')
           	+  '      </div>'
           	+  '      <div class="sfb-form-message">'
           	+  '        <textarea placeholder="' + self.text('TextAreaPlaceHolder') + '"></textarea>'
@@ -177,6 +177,7 @@ jQuery(function(){
             	AdvancedLinkDisabled:   'Advanced',
             	AdvancedLinkEnabled:    'Disable advanced',
 				StartButton:            'FEEDBACK'
+				SeparateEmailsByComma:  'Separate e-mail addresses with comma'
         	}, settings.texts ? settings.texts : {});
 
         	self.initFeedbackButton();
