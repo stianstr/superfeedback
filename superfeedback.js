@@ -176,7 +176,7 @@ jQuery(function(){
             	MailCC:                 'CC',
             	AdvancedLinkDisabled:   'Advanced',
             	AdvancedLinkEnabled:    'Disable advanced',
-				StartButton:            'FEEDBACK'
+				StartButton:            'FEEDBACK',
 				SeparateEmailsByComma:  'Separate e-mail addresses with comma'
         	}, settings.texts ? settings.texts : {});
 
