@@ -221,6 +221,11 @@ jQuery(function(){
 			self.initChatlio();
 			self.initChatButton();
 
+			if (self.settings.mailTo)
+				self.addMailTo(self.settings.mailTo);
+			if (self.settings.customData)
+				self.addCustomData(self.settings.customData);
+
 			window.SuperFeedback.instance = self;
     	}
 
